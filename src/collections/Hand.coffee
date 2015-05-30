@@ -5,7 +5,6 @@ class window.Hand extends Backbone.Collection
 
   hit: ->
     @add(@deck.pop())
-    console.log(@scores())
     if @scores()[0] > 21
       @trigger 'bust'
       return
@@ -26,5 +25,7 @@ class window.Hand extends Backbone.Collection
     [@minScore(), @minScore() + 10 * @hasAce()]
 
   stand: ->
+    @trigger 'stand', @
+    return
 
 
