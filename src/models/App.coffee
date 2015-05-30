@@ -5,6 +5,7 @@ class window.App extends Backbone.Model
     @set 'deck', deck = new Deck()
     @set 'playerHand', deck.dealPlayer()
     @set 'dealerHand', deck.dealDealer()
+    @set 'status', "This is a status message"
     (@get 'playerHand').on 'bust', @handlePlayerBusted, @
     (@get 'playerHand').on 'stand', @handlePlayerStand, @
     (@get 'dealerHand').on 'bust', @handleDealerBusted, @

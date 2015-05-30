@@ -24,12 +24,14 @@ class window.AppView extends Backbone.View
     @model.on 'tie', @handleTie, @
     @render()
     @toggleButtonOn()
+    return
 
   render: ->
     @$el.children().detach()
     @$el.html @template()
     @$('.player-hand-container').html new HandView(collection: @model.get 'playerHand').el
     @$('.dealer-hand-container').html new HandView(collection: @model.get 'dealerHand').el
+    @$el.append (new StatusView model: @model.get 'status').$el
     @$('.continue-button').attr("disabled", "disabled")
     @$('.restart-button').attr("disabled", "disabled")
 

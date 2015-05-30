@@ -11,6 +11,7 @@ class window.Card extends Backbone.Model
         when 12 then 'Queen'
         else params.rank
 
+
   flip: ->
     @set 'revealed', !@get 'revealed'
     @
