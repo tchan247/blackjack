@@ -27,5 +27,3 @@ class window.Hand extends Backbone.Collection
   stand: ->
     @trigger 'stand', @
     return
-
-

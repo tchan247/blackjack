@@ -1,6 +1,6 @@
 class window.AppView extends Backbone.View
   template: _.template '
-    <button class="hit-button">Hit</button> <button class="stand-button">Stand</button><button class="continue-button" disabled>Continue</button><button class="restart-button" disabled>Restart</button>
+    <button class="hit-button">Hit</button><button class="stand-button">Stand</button><button class="bet-button">Bet</button><button class="continue-button" disabled>Continue</button><button class="restart-button" disabled>Restart</button>
     <div class="player-hand-container"></div>
     <div class="dealer-hand-container"></div>
   '
@@ -14,6 +14,10 @@ class window.AppView extends Backbone.View
       return
     'click .restart-button': ->
         @model.handleRestart()
+        @render()
+        return
+    'click .bet-button': ->
+        @model.handleBet()
         @render()
         return
 
@@ -31,10 +35,10 @@ class window.AppView extends Backbone.View
     @$el.html @template()
     @$('.player-hand-container').html new HandView(collection: @model.get 'playerHand').el
     @$('.dealer-hand-container').html new HandView(collection: @model.get 'dealerHand').el
-    @$el.append (new StatusView model: @model.get 'status').$el
+    #debugger;
+    @$el.append new StatusView( model: message: @model.get 'status').$el
     @$('.continue-button').attr("disabled", "disabled")
     @$('.restart-button').attr("disabled", "disabled")
-
 
   handlePlayerWin: ->
     @toggleButtonOff()

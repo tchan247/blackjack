@@ -5,6 +5,8 @@ class window.App extends Backbone.Model
     @set 'deck', deck = new Deck()
     @set 'playerHand', deck.dealPlayer()
     @set 'dealerHand', deck.dealDealer()
+    @set 'playerChips', 100
+    @set 'betCount', 0
     @set 'status', "This is a status message"
     (@get 'playerHand').on 'bust', @handlePlayerBusted, @
     (@get 'playerHand').on 'stand', @handlePlayerStand, @
@@ -16,15 +18,16 @@ class window.App extends Backbone.Model
     return
 
   handleDealerBusted: ->
+    @set 'playerChips', @get 'playerChips' + @get 'betCount'
     @trigger 'playerWin', @
     return
 
   handlePlayerStand: ->
     dealer = @get 'dealerHand'
-    playerScore = (@get 'playerHand').scores()[1] > 21 ?
+    playerScore = (@get 'playerHand').scores()
     playerHighestScore = if (playerScore[1] > 21) then playerScore[0] else playerScore[1]
 
-    dealer.at(0).flip()
+    dealer.first().flip()
 
     while dealer.scores()[0] < playerHighestScore || dealer.scores()[0] < 17
       dealer.hit()
@@ -54,5 +57,7 @@ class window.App extends Backbone.Model
     (@get 'dealerHand').on 'bust', @handleDealerBusted, @
     return
 
-
-
+  handleBet: ->
+    if (@get 'betCount') < (@get 'playerChips')
+      @set 'betCount', (@get 'betCount')+1
+      return
